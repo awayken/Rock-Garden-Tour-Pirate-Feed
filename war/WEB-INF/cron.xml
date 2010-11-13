@@ -3,6 +3,6 @@
 	<cron>
 		<url>/createfeed.cfm</url>
 		<description>Creates the data that powers the RSS feed.</description>
-		<schedule>every 1 minute</schedule>
+		<schedule>every 10 minute</schedule>
 	</cron>
 </cronentries>

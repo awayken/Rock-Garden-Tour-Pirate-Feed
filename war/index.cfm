@@ -33,7 +33,7 @@
 				<h4><a href="#local.i.link#">#local.i.title#</a></h4>
 				<p class="description">#local.i.description#</p>
 				<p class="meta">
-					Added on #DateFormat(local.i.pubDate, "medium")# at #TimeFormat(local.i.pubDate, "medium")#<br />
+					Added on #DateFormat(local.i.pubDate, "medium")#<br />
 					<a href="#local.i.link#">#local.i.link#</a> (#local.i.enclosuretype#)
 				</p>
 			</div>
