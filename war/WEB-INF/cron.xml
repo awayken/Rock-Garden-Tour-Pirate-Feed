@@ -2,7 +2,7 @@
 <cronentries>
 	<cron>
 		<url>/createfeed.cfm</url>
-		<description>Creates the data that powers the RSS feed.</description>
-		<schedule>every 10 minutes</schedule>
+		<description>Updates the FeedMeta and FeedItem datastores.</description>
+		<schedule>every 24 hours</schedule>
 	</cron>
 </cronentries>
