@@ -1,23 +1,44 @@
-<cfsetting showDebugOutput="no" requestTimeout="3600" />
-
-<cfset public = createObject("component", "public") />
-<cfset tools = createObject("component", "tools") />
-
-<cfif IsDefined("URL.createFeed")>
-	<cfset local.logtext = "" />
-	
-	<cftry>
-		<cfinvoke method="createFeed" component="public" />
-		<cfset local.logtext = "New RSS data was successfully created on " & DateFormat(Now(), "medium") & " at " & TimeFormat(Now(), "medium") />
+<cfsetting showDebugOutput="no" />
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Rock Garden Tour (Pirate Feed)</title>
+		<meta name="robots" content="noindex, nofollow" />
+		<link rel="stylesheet" href="/_styles/styles.css" media="screen" />
+		<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+		<script src="/_scripts/scripts.js"></script>
+		<link rel="alternate" type="application/rss+xml" href="/rockgardentour.rss" title="Rock Garden Tour (Pirate Feed)" />
+	</head>
+	<body>
+		<header>
+			<h1><a href="/">Rock Garden Tour (Pirate Feed)</a></h1>
+			<p>This is what happens when a dude majors in computer science in college.</p>
+			<p>(And gets sick of nine-minute Rock Garden Tour podcast episodes.)</h2>
+		</header>
 		
-		<cfcatch>
-			<cfset local.logtext = cfcatch.message />
-		</cfcatch>
-	</cftry>
-	
-	<cflog file="RockGardenTour" text="#local.logtext#" />
-	
-	<cflocation url="/rockgardentour.xml" addtoken="no" />
-<cfelse>
-	<p>Welcome to the Rock Garden Tour (Pirate Feed).</p>
-</cfif>
+		<section id="download">
+			<div class="rss">Subscribe to the <a href="/rockgardentour.rss" type="application/rss+xml">rss feed</a>.</div>
+		</section>
+		
+		<section id="items">
+		<cfinvoke method="getFeedMeta" component="feed.public" returnvariable="local.feedmeta" />
+		<cfinvoke method="getFeedItems" component="feed.public" feedmetakey="#googleKey(local.feedmeta[1])#" returnvariable="local.feeditems" />
+		<cfloop array="#local.feeditems#" index="local.i">
+			<cfoutput>
+			<div class="item">
+				<h4><a href="#local.i.link#">#local.i.title#</a></h4>
+				<p class="description">#local.i.description#</p>
+				<p class="meta">
+					Added on #DateFormat(local.i.pubDate, "medium")# at #TimeFormat(local.i.pubDate, "medium")#<br />
+					<a href="#local.i.link#">#local.i.link#</a> (#local.i.enclosuretype#)
+				</p>
+			</div>
+			</cfoutput>
+		</cfloop>
+		</section>
+	</body>
+</html>

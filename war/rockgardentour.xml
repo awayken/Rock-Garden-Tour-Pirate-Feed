@@ -1,4 +1,0 @@
-<cfsetting enablecfoutputonly="yes" showdebugoutput="no">
-
-<cfcontent reset="true" type="application/rss+xml">
-<cfinvoke method="displayFeed" component="public" />

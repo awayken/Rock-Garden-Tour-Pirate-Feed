@@ -51,7 +51,7 @@
 		<servlet-name>cfmServlet</servlet-name>
         <url-pattern>*.cfml</url-pattern>
 		<url-pattern>*.cfm</url-pattern>
-		<url-pattern>rockgardentour.xml</url-pattern>
+		<url-pattern>rockgardentour.rss</url-pattern>
 	</servlet-mapping>
 
     <servlet-mapping>

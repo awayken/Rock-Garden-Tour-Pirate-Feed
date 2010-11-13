@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cronentries>
 	<cron>
-		<url>/?createfeed</url>
+		<url>/createfeed.cfm</url>
 		<description>Creates the data that powers the RSS feed.</description>
-		<schedule>every 24 hours</schedule>
+		<schedule>every 1 minute</schedule>
 	</cron>
 </cronentries>
