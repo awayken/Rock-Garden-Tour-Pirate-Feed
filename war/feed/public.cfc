@@ -13,17 +13,17 @@
 <cfoutput><?xml version="1.0"?>
 <rss version="2.0">
 	<channel>
-		<title>#local.feedmeta[1].title#</title>
+		<title>#Trim(local.feedmeta[1].title)#</title>
 		<link>#local.feedmeta[1].link#</link>
-		<description>#local.feedmeta[1].description#</description>
+		<description><![CDATA[#local.feedmeta[1].description#]]></description>
 		<language>en-us</language>
 		<lastBuildDate>#DateFormat(local.feedmeta[1].pubDate, "long")# #TimeFormat(local.feedmeta[1].pubDate, "long")#</lastBuildDate>
 		<generator>Open Bluedragon on Google AppEngine</generator>
 		<ttl>1440</ttl>
 	<cfloop array="#local.feeditems#" index="local.i">
 		<item>
-			<title>#local.i.title#</title>
-			<description>#local.i.description#</description>
+			<title>#Trim(local.i.title)#</title>
+			<description><![CDATA[#local.i.description#]]></description>
 			<pubDate>#DateFormat(local.i.pubDate, "long")# #TimeFormat(local.i.pubDate, "long")#</pubDate>
 			<guid>#local.i.link#</guid>
 			<link>#local.i.link#</link>

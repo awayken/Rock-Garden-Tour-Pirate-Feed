@@ -1,8 +1,8 @@
-<!-- Indices written at Sat, 13 Nov 2010 06:15:13 UTC -->
+<!-- Indices written at Sat, 13 Nov 2010 06:26:27 UTC -->
 
 <datastore-indexes>
 
-    <!-- Used 3 times in query history -->
+    <!-- Used 1 time in query history -->
     <datastore-index kind="feeditem" ancestor="false" source="auto">
         <property name="feedmetakey" direction="asc"/>
         <property name="pubdate" direction="desc"/>
