@@ -9,7 +9,7 @@
 		<!--[if lt IE 9]>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
 		<script src="/_scripts/scripts.js"></script>
 		<link rel="alternate" type="application/rss+xml" href="/rockgardentour.rss" title="Rock Garden Tour (Pirate Feed)" />
 	</head>
@@ -20,14 +20,23 @@
 			<p>(And gets sick of nine-minute Rock Garden Tour podcast episodes.)</h2>
 		</header>
 		
+	<cfif isDefined("URL.logstatus")>
+		<section id="messages">
+		<cfif URL.logstatus eq "true">
+			<div class="message success">Feed successfully updated.</div>
+		<cfelse>
+			<div class="message failure">There was a problem updating the feed. See the "log" datastore for more details.</div>
+		</cfif>
+		</section>
+	</cfif>
+		
 		<section id="download">
 			<div class="rss">Subscribe to the <a href="/rockgardentour.rss" type="application/rss+xml">rss feed</a>.</div>
 		</section>
 		
 		<section id="items">
-		<cfinvoke method="getFeedMeta" component="feed.public" returnvariable="local.feedmeta" />
-		<cfinvoke method="getFeedItems" component="feed.public" feedmetakey="#googleKey(local.feedmeta[1])#" returnvariable="local.feeditems" />
-		<cfloop array="#local.feeditems#" index="local.i">
+		<cfset feed = createObject("component", "feed.public") />
+		<cfloop array="#feed.getFeedItems()#" index="local.i">
 			<cfoutput>
 			<div class="item">
 				<h4><a href="#local.i.link#">#local.i.title#</a></h4>

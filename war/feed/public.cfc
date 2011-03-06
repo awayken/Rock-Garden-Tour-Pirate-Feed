@@ -1,26 +1,27 @@
 <cfcomponent displayname="Feed" output="false" extends="datafacade">
 	
 	<cfset this.source = "http://sdpb.org/radio/showarchive.aspx?progname=rockgardentour" />
-	<cfset this.today = Now() />
+	<cfset this.title = "Rock Garden Tour (Pirate Feed)" />
+	<cfset this.link = "http://" & cgi.http_host & Replace(cgi.script_name, "index.cfm", "") & "rockgardentour.rss" />
+	<cfset this.description = "A pirate feed of the full length episodes from the Rock Garden Tour radio show." />
+	<cfset this.pubdate = Now() />
 	
 	<cffunction name="displayFeed" access="public" output="true"
 				hint="Gets the data currently in the datastore in FeedMeta and FeedItem, and it displays them as an RSS feed.">
 		
 		<cfset var local = StructNew() />
-		<cfset local.feedmeta = getFeedMeta() />
-		<cfset local.feeditems = getFeedItems(googleKey(local.feedmeta[1])) />
 		
 <cfoutput><?xml version="1.0"?>
 <rss version="2.0">
 	<channel>
-		<title>#Trim(local.feedmeta[1].title)#</title>
-		<link>#local.feedmeta[1].link#</link>
-		<description><![CDATA[#local.feedmeta[1].description#]]></description>
+		<title>#Trim(this.title)#</title>
+		<link>#this.link#</link>
+		<description><![CDATA[#this.description#]]></description>
 		<language>en-us</language>
-		<lastBuildDate>#DateFormat(local.feedmeta[1].pubDate, "long")# #TimeFormat(local.feedmeta[1].pubDate, "long")#</lastBuildDate>
+		<lastBuildDate>#DateFormat(this.pubDate, "long")# #TimeFormat(this.pubDate, "long")#</lastBuildDate>
 		<generator>Open Bluedragon on Google AppEngine</generator>
 		<ttl>1440</ttl>
-	<cfloop array="#local.feeditems#" index="local.i">
+	<cfloop array="#getFeedItems()#" index="local.i">
 		<item>
 			<title>#Trim(local.i.title)#</title>
 			<description><![CDATA[#local.i.description#]]></description>
@@ -38,10 +39,19 @@
 
 
 	<cffunction name="createFeed" access="public" output="false"
-				hint="Writes the metadata and items for the feed to the datastores.">
+				hint="Writes the items for the feed to the datastore.">
 		
 		<cfscript>
-			writeFeedItems(scrapeSource(this.source), writeFeedMeta());
+			writeFeedItems(scrapeSource(this.source));
+		</cfscript>
+		
+	</cffunction>
+	
+	<cffunction name="deleteFeed" access="public" output="false"
+				hint="Clears the datastore for feed items.">
+		
+		<cfscript>
+			googleDelete(getFeedItems());
 		</cfscript>
 		
 	</cffunction>
@@ -97,43 +107,29 @@
 		<cfreturn local.output />
 	</cffunction>
 	
-	<cffunction name="writeFeedMeta" access="private" output="false" returntype="string"
-				hint="Writes the feed metadata to the FeedMeta datastore.">
-		
-		<cfset var meta = StructNew() />
-		
-		<cfset meta.title = "Rock Garden Tour (Pirate Feed)" />
-		<cfset meta.link = "http://" & cgi.http_host & Replace(cgi.script_name, "index.cfm", "") & "rockgardentour.rss" />
-		<cfset meta.description = "A pirate feed of the full length episodes from the Rock Garden Tour radio show." />
-		<cfset meta.pubdate = this.today />
-		
-		<cfreturn googleWrite(meta, "FeedMeta")>
-	</cffunction>
-	
 	<cffunction name="writeFeedItems" access="private" output="true" returntype="string"
 				hint="Writes the feed items to the FeedItem datastore.">
 		<cfargument name="episodes" required="yes" />
-		<cfargument name="metakey" required="no" default="" />
 		
 		<cfset var local = StructNew() />
 		<cfset var item = StructNew() />
 
-		<cfset local.i = 1>
 		<cfloop array="#arguments.episodes#" index="local.episode">
-			<cfscript>
-				item = StructNew();
-				item.title = local.episode.title; //Get actual episode title
-				item.link = Replace(local.episode.link, " ", "%20", "all"); //Get episode link
-				item.pubdate = local.episode.pubdate; //Get actual published dates
-				item.description = local.episode.description; //Get actual published description
-	  			item.enclosure = Replace(local.episode.link, " ", "%20", "all"); //Also episode link
-	  			item.enclosuretype = "audio/mp3";
-				item.feedmetakey = arguments.metakey;
-	  			
-				googleWrite(item, "FeedItem");
-				
-				local.i = local.i + 1;
-			</cfscript>
+			<cfset local.itemlookup = getFeedItems(hash(local.episode.link)) />
+			<cfif Not ArrayLen(local.itemlookup)>
+				<cfscript>
+					item = StructNew();
+					item.idhash = hash(local.episode.link); //A hash of the MP3 link for later lookup
+					item.title = local.episode.title; //Get actual episode title
+					item.link = Replace(local.episode.link, " ", "%20", "all"); //Get episode link
+					item.pubdate = local.episode.pubdate; //Get actual published dates
+					item.description = local.episode.description; //Get actual published description
+		  			item.enclosure = Replace(local.episode.link, " ", "%20", "all"); //Also episode link
+		  			item.enclosuretype = "audio/mp3";
+		  			
+					googleWrite(item, "FeedItem");
+				</cfscript>
+			</cfif>
 		</cfloop>
 	</cffunction>
 

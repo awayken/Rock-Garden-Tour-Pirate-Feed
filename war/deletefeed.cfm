@@ -3,8 +3,8 @@
 <cfset log.date = Now() />
 
 <cftry>
-	<cfinvoke method="createFeed" component="feed.public" />
-	<cfset log.text = "RSS data was successfully created on " & DateFormat(Now(), "medium") & " at " & TimeFormat(Now(), "medium") />
+	<cfinvoke method="deleteFeed" component="feed.public" />
+	<cfset log.text = "RSS data was successfully deleted on " & DateFormat(Now(), "medium") & " at " & TimeFormat(Now(), "medium") />
 	<cfset log.status = true />
 
 	<cfcatch>

@@ -1,10 +1,16 @@
-<!-- Indices written at Sat, 13 Nov 2010 06:26:27 UTC -->
+<!-- Indices written at Sun, 6 Mar 2011 05:47:53 UTC -->
 
 <datastore-indexes>
 
-    <!-- Used 1 time in query history -->
+    <!-- Used 276 times in query history -->
     <datastore-index kind="feeditem" ancestor="false" source="auto">
-        <property name="feedmetakey" direction="asc"/>
+        <property name="titlehash" direction="asc"/>
+        <property name="pubdate" direction="desc"/>
+    </datastore-index>
+
+    <!-- Used 69 times in query history -->
+    <datastore-index kind="feeditem" ancestor="false" source="auto">
+        <property name="idhash" direction="asc"/>
         <property name="pubdate" direction="desc"/>
     </datastore-index>
 

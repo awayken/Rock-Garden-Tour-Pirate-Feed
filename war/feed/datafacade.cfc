@@ -1,33 +1,19 @@
 <cfcomponent displayname="Data Facade" hint="Contains the data methods." output="false">
 
-	<cffunction name="getFeedMeta" access="public" output="false" returntype="array"
-				hint="Gets the most recent feed metadata from the FeedMeta datastore.">
-		<cfargument name="last" required="no" default="1" />
-		
-		<cfset var local = StructNew() />
-		<cfquery dbtype="google" name="local.feedmeta">
-			select from FeedMeta
-			order by pubdate DESC
-			from 1, to #arguments.last#
-		</cfquery>
-		
-		<cfreturn local.feedmeta />
-	</cffunction>
-
 	<cffunction name="getFeedItems" access="public" output="false" returntype="array"
 				hint="Gets the feed items with optional meta key from the FeedItem datastore.">
-		<cfargument name="feedmetakey" required="no" default="" />
+		<cfargument name="idhash" required="no" default="" />
 		
-		<cfset var local = StructNew() />
-		<cfquery dbtype="google" name="local.feeditems">
-			select from FeedItem
-		<cfif Len(arguments.feedmetakey)>
-			where feedmetakey == #arguments.feedmetakey#
+		<cfset var feeditems = StructNew() />
+		<cfquery dbtype="google" name="feeditems">
+			SELECT FROM FeedItem
+		<cfif Len(arguments.idhash)>
+			WHERE idhash == '#arguments.idhash#'
 		</cfif>
-			order by pubdate DESC
+			ORDER BY pubdate DESC
 		</cfquery>
 		
-		<cfreturn local.feeditems />
+		<cfreturn feeditems />
 	</cffunction>
 	
 	
