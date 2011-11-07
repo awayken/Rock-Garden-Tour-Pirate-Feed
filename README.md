@@ -1,6 +1,7 @@
-# Rock Garden Tour (Pirate Feed) #
+Rock Garden Tour (Pirate Feed)
+==============================
 
-Generates a pirate RSS feed for the [Rock Garden Tour radio show](http://www.sdpb.org/rockgardentour/), using ColdFusion ([Open Bluedragon on Google AppEngine](http://wiki.openbluedragon.org/wiki/index.php/Category:GoogleAppEngine)).
+Generates a pirate RSS feed for the [Rock Garden Tour radio show](http://www.sdpb.org/rockgardentour/), using CFML. ([Open BlueDragon on Google AppEngine](http://wiki.openbluedragon.org/wiki/index.php/Category:GoogleAppEngine)).
 
 Visit [the AppEngine url](http://rockgardentour.appspot.com) to view the current episodes and to subscribe to the RSS feed.
 
