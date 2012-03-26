@@ -1,6 +1,0 @@
-<queue-entries>
-    <queue>
-        <name>write-behind-task</name>
-        <rate>10/s</rate>
-    </queue>
-</queue-entries>

@@ -1,3 +1,9 @@
 .classpath
 .project
 .settings
+.DS_Store
+/webapp/bluedragon/
+/webapp/manual/
+/webapp/WEB-INF/bluedragon/bluedragon.xml.bak*
+/webapp/WEB-INF/bluedragon/work/
+/build/webapp*
