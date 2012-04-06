@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <server>
-  <cfmail>
-    <smtpserver>127.0.0.1</smtpserver>
-    <threads>1</threads>
-    <smtpport>25</smtpport>
-    <charset>UTF-8</charset>
-  </cfmail>
   <cfquery>
     <cache>true</cache>
     <slowlog>1</slowlog>
   </cfquery>
+  <cfmail>
+    <smtpserver>127.0.0.1</smtpserver>
+    <threads>1</threads>
+    <charset>UTF-8</charset>
+    <smtpport>25</smtpport>
+  </cfmail>
   <cfapplication>
-    <clientstorage>cookie</clientstorage>
     <enabled>true</enabled>
+    <clientstorage>cookie</clientstorage>
     <sessiontimeout>#CreateTimeSpan(0,0,20,0)#</sessiontimeout>
     <applicationtimeout>#CreateTimeSpan(2,0,0,0)#</applicationtimeout>
     <j2eesession>false</j2eesession>
   </cfapplication>
   <debugoutput>
+    <enabled>false</enabled>
     <executiontimes>
       <show>true</show>
       <highlight>250</highlight>
     </executiontimes>
-    <enabled>false</enabled>
     <exceptions>
       <show>true</show>
     </exceptions>
     <database>
       <show>true</show>
     </database>
+    <ipaddresses></ipaddresses>
     <variables>
       <url>true</url>
       <form>true</form>
@@ -37,12 +38,11 @@
       <client>true</client>
       <server>true</server>
       <request>true</request>
-      <session>true</session>
       <application>true</application>
+      <session>true</session>
       <show>false</show>
       <variables>true</variables>
     </variables>
-    <ipaddresses></ipaddresses>
   </debugoutput>
   <file>
     <maxfiles>1000</maxfiles>
@@ -64,10 +64,10 @@
     <missingtemplatehandler></missingtemplatehandler>
     <lastfile>/Users/miles/Sites/Rock-Garden-Tour-Pirate-Feed/webapp/WEB-INF/bluedragon/bluedragon.xml.bak.1</lastfile>
     <errorhandler></errorhandler>
-    <password>admin</password>
     <buffersize>0</buffersize>
+    <password>admin</password>
+    <lastupdated>06/Apr/2012 03:57.16</lastupdated>
     <defaultcharset>utf-8</defaultcharset>
-    <lastupdated>06/Apr/2012 03:06.32</lastupdated>
   </system>
   <fonts>
     <dirs>/usr/X11R6/lib/X11/fonts/ttf,/usr/X11R6/lib/X11/fonts/TTF</dirs>
